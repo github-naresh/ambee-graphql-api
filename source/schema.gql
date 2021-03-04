@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AirQuality {
+  NQ2: Float
+  PM10: Float
+  PM25: Float
+  CO: Float
+  SO2: Float
+  OZONE: Float
+  AQI: Float
+  updatedAt: String
+}
+
+type Query {
+  getAirQuality(long: String!, lat: String!): AirQuality!
+}

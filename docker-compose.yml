@@ -1,0 +1,56 @@
+version: "3.6"
+
+services:
+  mockServer:
+    image: muonsoft/openapi-mock
+    container_name: mockServer
+    environment:
+      - OPENAPI_MOCK_SPECIFICATION_URL=swagger.yml
+      - OPENAPI_MOCK_DEBUG=true
+    volumes: 
+      - ./setup/swagger.yml:/app/swagger.yml
+    ports: 
+      - 8080:8080
+
+  localstack:
+    container_name: "localstack"
+    image: localstack/localstack
+    ports:
+      - "4566-4599:4566-4599"
+    environment:
+      - LAMBDA_EXECUTOR=docker
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR}
+
+  redis:
+    container_name: redis
+    image: redis:3.2-alpine
+    ports:
+      - "6379:6379"
+
+  redisInsight:
+    container_name: redisInsight
+    image: redislabs/redisinsight:latest
+    ports:
+      - 8001:8001
+    volumes: 
+      - ./data/redisInsight:/db
+    
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: server:local
+    container_name: server
+    environment:
+      - API_ENDPOINT=http://mockserver:8080
+      - ENABLE_DEBUG=true
+      - ENABLE_PLAYGROUND=true
+      - DYNAMO_DB_ENPOINT=http://localstack:4566
+      - AWS_ENPOINT=http://localstack:4566
+      - AWS_REGION=us-east-1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ALLOW_AUTH_BYPASS=true
+    ports:
+      - "4000:3000"

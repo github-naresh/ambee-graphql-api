@@ -1,0 +1,4 @@
+data
+source/dist
+source/node_modules
+source/.env

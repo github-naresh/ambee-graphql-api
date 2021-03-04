@@ -1,0 +1,78 @@
+openapi: 3.0.1
+info:
+  title: Cashrewards 3.0 API
+  description: Web API for cashrewards 3.0
+  version: v1
+paths:
+  /latest/by-lat-lng:
+    get:
+      tags:
+        - airQuality
+      summary: Air quality current- Geospatial search
+      parameters:
+        - name: lat
+          in: query
+          description: Latitude
+          schema:
+            type: string
+        - name: lng
+          in: query
+          descrption: Longitude
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  stations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Station'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Station:
+      type: object
+      properties:
+        NO2:
+          type: number
+          format: double
+        PM10:
+          type: number
+          format: double
+        PM25:
+          type: number
+          format: double
+        CO:
+          type: number
+          format: double
+        SO2:
+          type: number
+          format: double
+        OZONE:
+          type: number
+          format: double
+        AQI:
+          type: number
+          format: double
+        updatedAt:
+          type: string
+          format: date-time
+        aqiInfo:
+          type: object
+          properties:
+            pollutant: 
+              type: string
+            concentration: 
+              type: integer
+            category:
+              type: string
