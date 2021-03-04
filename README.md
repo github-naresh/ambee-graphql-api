@@ -1,12 +1,10 @@
-- __Install [awslocal](https://github.com/localstack/awscli-local)__ for local AWS CLI execution
-  - Or you can use AWS CLI with by specifying localstack endpoint eg.
-    - `aws --endpoint-url=http://localhost:4566 kinesis list-streams`
-- __Start Containers__
-  - RUN `docker-compose up` to start containers
-    - It will start API mock server based on the swagger documentation yml file (`setup/swagger.yml`)
-    - Start `localstack` for AWS service mocking.
-- __Create Dynamo DB tables__
-  - RUN `cd setup && ./aws-setup.sh && cd -`
+# Ambee GQL REST facade
 
-- Create copy of `source/.env.bak` and rename it to `source/.env`
-- RUN `yarn start` or `yarn start:dev` to start the server
+Expose Ambee REST api as graphql api.
+Converted API
+- Air quality current- Geospatial search
+    -  `latest/by-lat-lng?lat=12&lng=77`
+
+## Project installation
+
+- Run `docker-compose up` bring docker containers up and running. 
